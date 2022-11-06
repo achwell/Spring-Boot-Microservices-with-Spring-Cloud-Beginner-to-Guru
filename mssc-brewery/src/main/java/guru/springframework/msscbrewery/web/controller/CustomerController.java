@@ -28,19 +28,19 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity handlePost(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<CustomerDto>  handlePost(@RequestBody CustomerDto customerDto) {
         CustomerDto savedDto = customerService.saveNewCustomer(customerDto);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/customer/" + savedDto.getId().toString());
-        return new ResponseEntity(headers, CREATED);
+        return new ResponseEntity<>(headers, CREATED);
     }
 
     @PutMapping({"/{customerId}"})
-    public ResponseEntity handleUpdate(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDto) {
+    public ResponseEntity<CustomerDto>  handleUpdate(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDto) {
         CustomerDto savedDto = customerService.updateCustomer(customerId, customerDto);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/customer/" + savedDto.getId().toString());
-        return new ResponseEntity(headers, NO_CONTENT);
+        return new ResponseEntity<>(headers, NO_CONTENT);
     }
 
     @DeleteMapping({"/{customerId}"})

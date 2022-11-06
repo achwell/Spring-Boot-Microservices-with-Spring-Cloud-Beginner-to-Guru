@@ -3,7 +3,6 @@ package guru.springframework.msscbrewery.web.controller.v2;
 import guru.springframework.msscbrewery.services.v2.BeerServiceV2;
 import guru.springframework.msscbrewery.web.model.v2.BeerDtoV2;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,18 +25,18 @@ public class BeerControllerV2 {
     }
 
     @PostMapping // POST - create new beer
-    public ResponseEntity handlePost(BeerDtoV2 beerDto) {
+    public ResponseEntity<BeerDtoV2> handlePost(BeerDtoV2 beerDto) {
         BeerDtoV2 savedDto = beerServiceV2.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         //todo add hostname to url
         headers.add("Location", "/api/v1/beer/" + savedDto.getId().toString());
-        return new ResponseEntity(headers, CREATED);
+        return new ResponseEntity<>(headers, CREATED);
     }
 
     @PutMapping({"/{beerId}"})
-    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, BeerDtoV2 beerDto) {
+    public ResponseEntity<BeerDtoV2> handleUpdate(@PathVariable("beerId") UUID beerId, BeerDtoV2 beerDto) {
         beerServiceV2.updateBeer(beerId, beerDto);
-        return new ResponseEntity(NO_CONTENT);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 
     @DeleteMapping({"/{beerId}"})
