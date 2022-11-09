@@ -4,12 +4,16 @@ import guru.springframework.msscbrewery.services.v2.BeerServiceV2;
 import guru.springframework.msscbrewery.web.model.v2.BeerDtoV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.*;
 
+@Validated
 @RequestMapping("/api/v2/beer")
 @RestController
 public class BeerControllerV2 {
@@ -20,12 +24,12 @@ public class BeerControllerV2 {
     }
 
     @GetMapping({"/{beerId}"})
-    public ResponseEntity<BeerDtoV2> getBeer(@PathVariable("beerId") UUID beerId) {
+    public ResponseEntity<BeerDtoV2> getBeer(@NotNull @PathVariable("beerId") UUID beerId) {
         return new ResponseEntity<>(beerServiceV2.getBeerById(beerId), OK);
     }
 
     @PostMapping // POST - create new beer
-    public ResponseEntity<BeerDtoV2> handlePost(BeerDtoV2 beerDto) {
+    public ResponseEntity<BeerDtoV2> handlePost(@Valid @NotNull @RequestBody BeerDtoV2 beerDto) {
         BeerDtoV2 savedDto = beerServiceV2.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         //todo add hostname to url
@@ -34,14 +38,14 @@ public class BeerControllerV2 {
     }
 
     @PutMapping({"/{beerId}"})
-    public ResponseEntity<BeerDtoV2> handleUpdate(@PathVariable("beerId") UUID beerId, BeerDtoV2 beerDto) {
+    public ResponseEntity<BeerDtoV2> handleUpdate(@NotNull @PathVariable("beerId") UUID beerId, @Valid @NotNull @RequestBody BeerDtoV2 beerDto) {
         beerServiceV2.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
     @DeleteMapping({"/{beerId}"})
     @ResponseStatus(NO_CONTENT)
-    public void deleteBeer(@PathVariable("beerId") UUID beerId) {
+    public void deleteBeer(@NotNull @PathVariable("beerId") UUID beerId) {
         beerServiceV2.deleteById(beerId);
     }
 }
