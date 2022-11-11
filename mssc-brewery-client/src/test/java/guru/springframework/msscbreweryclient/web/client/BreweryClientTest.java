@@ -2,16 +2,19 @@ package guru.springframework.msscbreweryclient.web.client;
 
 import guru.springframework.msscbreweryclient.web.model.BeerDto;
 import guru.springframework.msscbreweryclient.web.model.CustomerDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Disabled
 class BreweryClientTest {
 
     @Autowired
@@ -26,7 +29,7 @@ class BreweryClientTest {
     @Test
     void testSaveNewBeer() {
         //given
-        BeerDto beerDto = BeerDto.builder().beerName("New Beer").build();
+        BeerDto beerDto = getValidBeerDto();
         URI uri = client.saveNewBeer(beerDto);
         assertNotNull(uri);
         System.out.println(uri);
@@ -36,7 +39,8 @@ class BreweryClientTest {
     void testUpdateBeer() {
         //given
         UUID id = UUID.randomUUID();
-        BeerDto beerDto = BeerDto.builder().id(id).beerName("New Beer").build();
+        BeerDto beerDto = getValidBeerDto();
+        beerDto.setId(id);
         client.updateBeer(id, beerDto);
     }
 
@@ -71,4 +75,15 @@ class BreweryClientTest {
     @Test
     void deleteCustomer() {
         client.deleteCustomer(UUID.randomUUID());
-    }}
+    }
+
+
+    private BeerDto getValidBeerDto() {
+        return BeerDto
+                .builder()
+                .beerName("My Beer")
+                .beerStyle("ALE")
+                .upc(1L)
+                .build();
+    }
+}

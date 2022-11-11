@@ -29,7 +29,7 @@ public class BeerDto {
     private OffsetDateTime createdDate;
 
     @Null
-    private OffsetDateTime modifiedDate;
+    private OffsetDateTime lastModifiedDate;
 
     @NotBlank
     private String beerName;
