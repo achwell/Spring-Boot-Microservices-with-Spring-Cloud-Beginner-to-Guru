@@ -14,7 +14,7 @@
 	<name>SFG Brewery Client</name>
 	<description>mssc-brewery-client</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -83,7 +83,7 @@
 									<version>[3.6.0,)</version>
 								</requireMavenVersion>
 								<requireJavaVersion>
-									<version>[17,)</version>
+									<version>[11,)</version>
 								</requireJavaVersion>
 								<requireReleaseDeps>
 									<onlyWhenRelease>true</onlyWhenRelease>
