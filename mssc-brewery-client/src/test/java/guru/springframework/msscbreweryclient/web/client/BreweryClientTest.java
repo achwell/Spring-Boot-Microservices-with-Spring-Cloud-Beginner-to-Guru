@@ -83,7 +83,7 @@ class BreweryClientTest {
                 .builder()
                 .beerName("My Beer")
                 .beerStyle("ALE")
-                .upc(1L)
+                .upc("UPC???")
                 .build();
     }
 }

@@ -20,7 +20,7 @@ public class Beer {
     private UUID id;
     private String beerName;
     private BeerStyleEnum beerStyle;
-    private Long upc;
+    private String upc;
 
     private Timestamp createdDate;
     private Timestamp lastUpdatedDate;
